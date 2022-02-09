@@ -10,7 +10,6 @@
             teams = []
             if (selected === 0) {
                 teams = $data.teams
-                console.log(teams)
             } else {
                 let teamNumbers
                 $data.events.every(eventObj => {

@@ -3,12 +3,14 @@
   import { pop } from 'svelte-spa-router'
   import Menu from './routes/Menu.svelte'
   import Teams from './routes/Teams.svelte'
+  import Team from './routes/Team.svelte'
 
   const dir = __dirname;
 
   const routes = {
     '/': Menu,
-    '/teams': Teams
+    '/teams': Teams,
+    '/teams/:number': Team
   }
 </script>
 
