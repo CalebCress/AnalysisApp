@@ -1,5 +1,5 @@
 <script>
-    import Team from '../components/Team.svelte'
+    import Team from '../components/ListTeam.svelte'
     import { data } from '../stores'
 
     let selected

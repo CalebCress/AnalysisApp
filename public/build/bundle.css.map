@@ -5,8 +5,8 @@
     "../../App.svelte"
   ],
   "sourcesContent": [
-    "<script>\n  import Router from 'svelte-spa-router'\n  import Menu from './routes/Menu.svelte'\n  import Teams from './routes/Teams.svelte'\n\n  const dir = __dirname;\n\n  const routes = {\n    '/': Menu,\n    '/teams': Teams\n  }\n</script>\n\n<style>\n  .breadcrumb {\n    position: static;\n  }\n</style>\n\n<main>\n  <nav class=\"breadcrumb\" aria-label=\"breadcrumbs\">\n    <ul>\n      <li><a href=\"#/\">Menu</a></li>\n      <li><a href=\"#/teams\">Teams</a></li>\n      <li><a href=\"#/events\">Events</a></li>\n    </ul>\n  </nav>\n  <Router {routes}/>\n</main>\n"
+    "<script>\n  import Router from 'svelte-spa-router'\n  import { pop } from 'svelte-spa-router'\n  import Menu from './routes/Menu.svelte'\n  import Teams from './routes/Teams.svelte'\n\n  const dir = __dirname;\n\n  const routes = {\n    '/': Menu,\n    '/teams': Teams\n  }\n</script>\n\n<style>\n  .breadcrumb {\n    position: static;\n  }\n</style>\n\n<main>\n  <nav class=\"level\">\n    <button class=\"button\" on:click={()=>{pop()}}><i class=\"gg-chevron-left\"></i></button>\n    <nav class=\"breadcrumb\" aria-label=\"breadcrumbs\">\n      <ul>\n        <li><a href=\"#/\">Menu</a></li>\n        <li><a href=\"#/teams\">Teams</a></li>\n        <li><a href=\"#/events\">Events</a></li>\n      </ul>\n    </nav>\n  </nav>\n  <Router {routes}/>\n</main>\n"
   ],
   "names": [],
-  "mappings": "AAcE,WAAW,cAAC,CAAC,AACX,QAAQ,CAAE,MAAM,AAClB,CAAC"
+  "mappings": "AAeE,WAAW,cAAC,CAAC,AACX,QAAQ,CAAE,MAAM,AAClB,CAAC"
 }
