@@ -27,7 +27,6 @@
       <ul>
         <li><a href="#/">Menu</a></li>
         <li><a href="#/teams">Teams</a></li>
-        <li><a href="#/events">Events</a></li>
       </ul>
     </nav>
   </nav>

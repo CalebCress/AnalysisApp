@@ -5,3 +5,5 @@ export const data = writable({
     teams: [],
     data: []
 })
+
+export const teams = writable({})

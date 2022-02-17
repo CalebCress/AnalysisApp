@@ -1,14 +1,56 @@
 <script>
-  import {data} from '../stores.js'
+  import {data, teams} from '../stores.js'
   let files
+  let apiUrl
+  function updateTeams() {
+    let teamsData = {}
+    $data.teams.forEach((team) => {
+      teamsData = Object.assign(teamsData, {
+        [team.number]: {
+          autoHighTotal: 0,
+          autoLowTotal: 0,
+          teleHighTotal: 0,
+          teleLowTotal: 0,
+          defense: 0,
+          matchTotal: 0
+        }
+      })
+    })
+
+    $data.data.forEach((scoutInfo) => {
+      let data = scoutInfo.data
+      if (scoutInfo.teamNumber in teamsData) {
+        teamsData[data.teamNumber].autoHighTotal += data.autoUpperScore
+        teamsData[data.teamNumber].autoLowTotal += data.autoLowerScore
+        teamsData[data.teamNumber].teleHighTotal += data.teleUpperScore
+        teamsData[data.teamNumber].teleLowTotal += data.teleLowerScore
+        if (data.defended) {
+          teamsData[data.teamNumber].defense ++
+        }
+        teamsData[data.teamNumber].matchTotal ++
+      }
+    })
+
+    teams.set(teamsData)
+  }
+
   $: {
     if (files && files.length > 0) {
       new Response(files[0]).json().then(json => {
         data.set(json)
+        updateTeams()
       }, err => {
         console.log("not json")
       })
     }
+  }
+  function loadRemote() {
+    fetch(`http://${apiUrl}/all`)
+    .then(response => response.json())
+    .then(json => {
+      data.set(json)
+      updateTeams()
+    })
   }
 </script>
 
@@ -29,7 +71,10 @@
             </span>
           </label>
         </div>
-        <input type="text" placeholder="localhost:4000"/>
+        <div>
+          <input type="text" placeholder="localhost:5000" bind:value={apiUrl}/>
+          <button class="button is-primary" on:click={loadRemote}>Load</button>
+        </div>
       </nav>
     </div>
 </main>
