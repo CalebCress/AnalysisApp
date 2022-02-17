@@ -36,6 +36,15 @@
         }
     }
 
+    function calcScore(teamData) {
+        let score = 0
+        score += teamData.autoHighTotal*4
+        score += teamData.autoLowTotal*2
+        score += teamData.teleHighTotal*2
+        score += teamData.teleLowTotal
+        return score
+    }
+
     function sort() {
         console.log(rankBy)
         if (rankBy === "number") {
@@ -43,7 +52,7 @@
                 return team1.number - team2.number
             })
         }
-        else if (rankBy === "defense") {
+        else{
             teamsInfo.sort((team1, team2) => {
                 if ($teams[team2.number].matchTotal === 0) {
                     return -1
@@ -51,7 +60,13 @@
                 else if ($teams[team1.number].matchTotal === 0) {
                     return 1
                 }
-                return ($teams[team1.number].defense/$teams[team1.number].matchTotal - $teams[team2.number].defense/$teams[team2.number].matchTotal)
+                if (rankBy === "defense") {
+                    return ($teams[team1.number].defense/$teams[team1.number].matchTotal - $teams[team2.number].defense/$teams[team2.number].matchTotal)
+                } else if (rankBy === "teleHigh") {
+                    return ($teams[team1.number].teleHighTotal/$teams[team1.number].matchTotal - $teams[team2.number].teleHighTotal/$teams[team2.number].matchTotal)
+                } else if (rankBy === "shootingScore") {
+                    return(calcScore($teams[team1.number])/$teams[team1.number].matchTotal - calcScore($teams[team2.number])/$teams[team2.number].matchTotal)
+                }
             })
         }
         teamsInfo = teamsInfo //Svelte doesnt react to .sort() need to cause variable assignment for reactivity
@@ -77,6 +92,8 @@
                 <select bind:value={rankBy} on:change={sort}>
                     <option value="number">Number</option>
                     <option value="defense">Defense %</option>
+                    <option value="teleHigh">Teleop High Port</option>
+                    <option value="shootingScore">Shooting Score Average</option>
                 </select>
             </div>
         </div>
